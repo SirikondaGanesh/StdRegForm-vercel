@@ -22,7 +22,7 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch("http://localhost:5000/api/students", {
+    fetch("https://studentregistrationform-vhlo.onrender.com/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
