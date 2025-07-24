@@ -3,12 +3,12 @@ import "./App.css";
 
 function App() {
   const [formData, setFormData] = useState({
-    registrationID: "",
-    studentName: "",
+    registration_id: "",
+    student_name: "",
     email: "",
-    departmentsr: "",
+    department: "",
     address: "",
-    phoneNumber: "",
+    phone_number: "",
     pincode: "",
   });
 
@@ -19,47 +19,44 @@ function App() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  
   const handleSubmit = (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  fetch('http://localhost:5000/api/studentDB', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(formData),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log("Server response:", data);
-      setSubmittedData(formData);  // only update UI if backend is successful
+    fetch("http://localhost:5000/api/students", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
     })
-    .catch((error) => {
-      console.error("Error submitting data:", error);
-      alert("Something went wrong while submitting the form.");
-    });
-};
-
-
-
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("✅ Server response:", data);
+        setSubmittedData(data); // show submitted data below form
+      })
+      .catch((error) => {
+        console.error("❌ Error submitting data:", error);
+        alert("Something went wrong while submitting the form.");
+      });
+  };
 
   return (
     <div className="container">
       <h2>Student Application Form</h2>
-      <form onSubmit={handleSubmit}>
 
+      <form onSubmit={handleSubmit}>
         <label>Registration ID:</label>
         <input
           type="text"
-          name="rollNo"
-          value={formData.rollNo}
+          name="registration_id"
+          value={formData.registration_id}
           onChange={handleChange}
           required
-         />  
+        />
+
         <label>Student Name:</label>
         <input
           type="text"
-          name="studentName"
-          value={formData.studentName}
+          name="student_name"
+          value={formData.student_name}
           onChange={handleChange}
           required
         />
@@ -71,14 +68,13 @@ function App() {
           value={formData.email}
           onChange={handleChange}
           required
-       
         />
 
         <label>Department:</label>
         <input
           type="text"
-          name="departmentsr"
-          value={formData.departmentsr}
+          name="department"
+          value={formData.department}
           onChange={handleChange}
           required
         />
@@ -94,8 +90,8 @@ function App() {
         <label>Phone Number:</label>
         <input
           type="tel"
-          name="phoneNumber"
-          value={formData.phoneNumber}
+          name="phone_number"
+          value={formData.phone_number}
           onChange={handleChange}
           required
         />
@@ -115,12 +111,12 @@ function App() {
       {submittedData && (
         <div className="output-box">
           <h3>Submitted Student Details</h3>
-          <p><strong>Registration ID:</strong> {submittedData.rollNo}</p>
-          <p><strong>Student Name:</strong> {submittedData.studentName}</p>
+          <p><strong>Registration ID:</strong> {submittedData.registration_id}</p>
+          <p><strong>Student Name:</strong> {submittedData.student_name}</p>
           <p><strong>Email:</strong> {submittedData.email}</p>
-          <p><strong>Department:</strong> {submittedData.departmentsr}</p>
+          <p><strong>Department:</strong> {submittedData.department}</p>
           <p><strong>Address:</strong> {submittedData.address}</p>
-          <p><strong>Phone Number:</strong> {submittedData.phoneNumber}</p>
+          <p><strong>Phone Number:</strong> {submittedData.phone_number}</p>
           <p><strong>Pincode:</strong> {submittedData.pincode}</p>
         </div>
       )}
